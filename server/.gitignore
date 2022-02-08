@@ -1,7 +1,3 @@
-/.yarn/*
-/.pnp.*
-
-!/.yarn/releases
-!/.yarn/sdks
+/node_modules
 
 .env
