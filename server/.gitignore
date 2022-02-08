@@ -3,3 +3,5 @@
 
 !/.yarn/releases
 !/.yarn/sdks
+
+.env

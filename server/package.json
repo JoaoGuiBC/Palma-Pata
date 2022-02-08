@@ -4,6 +4,9 @@
   "main": "src/server.js",
   "license": "MIT",
   "packageManager": "yarn@3.2.0-rc.14",
+  "resolutions": {
+    "@prisma/client/.prisma": "link:node_modules/.prisma"
+  },
   "scripts": {
     "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules ./src/server.ts"
   },
