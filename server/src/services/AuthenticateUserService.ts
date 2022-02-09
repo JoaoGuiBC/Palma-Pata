@@ -3,6 +3,7 @@ import { sign } from "jsonwebtoken";
 
 import authConfig from "../config/auth";
 import { prisma } from "../database/prismaClient";
+import { AppError } from "../errors/AppError";
 
 interface IUser {
   username: string;
@@ -34,13 +35,13 @@ class AuthenticateAdminService {
     });
 
     if (!user) {
-      throw new Error("Incorrect email/password combination");
+      throw new AppError("Credenciais incorretas", 401);
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
-      throw new Error("Incorrect email/password combination");
+      throw new AppError("Credenciais incorretas", 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

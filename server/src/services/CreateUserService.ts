@@ -1,6 +1,7 @@
 import { hash } from "bcrypt";
 
 import { prisma } from "../database/prismaClient";
+import { AppError } from "../errors/AppError";
 
 interface ICreateUser {
   username: string;
@@ -34,7 +35,7 @@ export class CreateUserService {
     });
 
     if (userExist) {
-      throw new Error("User already exist");
+      throw new AppError("Usuário já existente", 400);
     }
 
     const hashPassword = await hash(password, 10);
