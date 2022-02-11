@@ -2,6 +2,8 @@ import { Request, Response, Router } from "express";
 
 import { prisma } from "../database/prismaClient";
 import { CreateUserService } from "../services/CreateUserService";
+import { UpdateUserPasswordService } from "../services/UpdateUserPasswordService";
+import { VerifyPasswordTokenService } from "../services/VerifyPasswordTokenService";
 
 const usersRouter = Router();
 
@@ -14,6 +16,11 @@ interface IUser {
   street_number: number;
   district: string;
   city: string;
+}
+
+interface IResetPassword {
+  token: string;
+  new_password: string;
 }
 
 usersRouter.get("/", async (_: Request, response: Response) => {
@@ -61,5 +68,26 @@ usersRouter.post("/", async (request: Request, response: Response) => {
 
   return response.json(newUser);
 });
+
+usersRouter.put(
+  "/resetPassword",
+  async (request: Request, response: Response) => {
+    const { token, new_password }: IResetPassword = request.body;
+
+    const verifyToken = new VerifyPasswordTokenService();
+    const updatePassword = new UpdateUserPasswordService();
+
+    const user_id = await verifyToken.execute({ token });
+    await updatePassword.execute({
+      user_id,
+      new_password,
+    });
+
+    response.json({
+      status: "success",
+      message: "Senha atualizada com sucesso",
+    });
+  }
+);
 
 export { usersRouter };
