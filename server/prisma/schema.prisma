@@ -43,4 +43,6 @@ model ResetTokens {
   id_user    String
   user       Users    @relation(fields: [id_user], references: [id])
   created_at DateTime @default(now())
+
+  @@map("reset_tokens")
 }
