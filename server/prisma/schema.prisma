@@ -21,7 +21,8 @@ model Users {
   city          String
   created_at    DateTime @default(now())
 
-  Requests Requests[]
+  Requests    Requests[]
+  ResetTokens ResetTokens[]
   @@map("users")
 }
 
@@ -35,4 +36,11 @@ model Requests {
   ended_at   DateTime?
 
   @@map("requests")
+}
+
+model ResetTokens {
+  token      String   @id @default(uuid())
+  id_user    String
+  user       Users    @relation(fields: [id_user], references: [id])
+  created_at DateTime @default(now())
 }
