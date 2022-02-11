@@ -81,6 +81,7 @@ usersRouter.put(
     await updatePassword.execute({
       user_id,
       new_password,
+      resetToken: token,
     });
 
     response.json({

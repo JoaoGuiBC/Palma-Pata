@@ -6,10 +6,11 @@ import { AppError } from "../errors/AppError";
 interface IUpdatePassword {
   new_password: string;
   user_id: string;
+  resetToken: string;
 }
 
 export class UpdateUserPasswordService {
-  async execute({ user_id, new_password }: IUpdatePassword) {
+  async execute({ user_id, new_password, resetToken }: IUpdatePassword) {
     const userExist = await prisma.users.findFirst({
       where: {
         id: user_id,
@@ -28,6 +29,15 @@ export class UpdateUserPasswordService {
       },
       data: {
         password: hashPassword,
+      },
+    });
+
+    await prisma.resetTokens.update({
+      where: {
+        token: resetToken,
+      },
+      data: {
+        used: true,
       },
     });
   }

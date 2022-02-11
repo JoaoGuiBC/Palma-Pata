@@ -19,6 +19,10 @@ export class VerifyPasswordTokenService {
       throw new AppError("Token inexistente", 401);
     }
 
+    if (resetToken.used) {
+      throw new AppError("Token expirado", 403);
+    }
+
     const currentHour = dayjs(new Date());
 
     if (currentHour.diff(resetToken.created_at, "hour") > 2) {

@@ -42,6 +42,7 @@ model ResetTokens {
   token      String   @id @default(uuid())
   id_user    String
   user       Users    @relation(fields: [id_user], references: [id])
+  used       Boolean  @default(false)
   created_at DateTime @default(now())
 
   @@map("reset_tokens")
