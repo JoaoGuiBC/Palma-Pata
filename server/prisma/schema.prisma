@@ -10,6 +10,7 @@ datasource db {
 model Users {
   id            String   @id @default(uuid())
   adm           Boolean  @default(false)
+  master        Boolean  @default(false)
   username      String
   phone_number  String
   email         String   @unique

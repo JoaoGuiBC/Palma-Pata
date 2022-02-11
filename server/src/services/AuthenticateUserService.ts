@@ -14,6 +14,7 @@ interface IUser {
   district: string;
   city: string;
   adm: boolean;
+  master: boolean;
 }
 
 interface Session {
@@ -60,6 +61,7 @@ class AuthenticateAdminService {
       district: user.district,
       city: user.city,
       adm: user.adm,
+      master: user.master,
     };
 
     return {
