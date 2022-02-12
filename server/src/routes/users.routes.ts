@@ -84,7 +84,7 @@ usersRouter.put(
       resetToken: token,
     });
 
-    response.json({
+    return response.json({
       status: "success",
       message: "Senha atualizada com sucesso",
     });

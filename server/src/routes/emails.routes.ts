@@ -51,7 +51,10 @@ emailsRouter.get(
       },
     });
 
-    response.json({ status: "Success", message: "E-mail enviado com sucesso" });
+    return response.json({
+      status: "Success",
+      message: "E-mail enviado com sucesso",
+    });
   }
 );
 

@@ -10,10 +10,14 @@ interface IRequest {
   quantity: number;
 }
 
+interface ICompleteRequest {
+  request_id: string;
+}
+
 requestsRouter.get("/listAll", async (_: Request, response: Response) => {
   const requests = await prisma.requests.findMany();
 
-  response.json(requests);
+  return response.json(requests);
 });
 
 requestsRouter.get("/", async (_: Request, response: Response) => {
@@ -23,7 +27,7 @@ requestsRouter.get("/", async (_: Request, response: Response) => {
     },
   });
 
-  response.json(requests);
+  return response.json(requests);
 });
 
 requestsRouter.post("/", async (request: Request, response: Response) => {
@@ -33,7 +37,29 @@ requestsRouter.post("/", async (request: Request, response: Response) => {
 
   const newRequest = await createRequest.execute({ id_user, quantity });
 
-  response.json(newRequest);
+  return response.json(newRequest);
 });
+
+requestsRouter.put(
+  "/complete",
+  async (request: Request, response: Response) => {
+    const { request_id }: ICompleteRequest = request.body;
+
+    await prisma.requests.update({
+      where: {
+        id: request_id,
+      },
+      data: {
+        collected: true,
+        ended_at: new Date(),
+      },
+    });
+
+    return response.json({
+      status: "Success",
+      message: "Pacote coletado com sucesso",
+    });
+  }
+);
 
 export { requestsRouter };
