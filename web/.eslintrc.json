@@ -7,6 +7,13 @@
         "plugin:react/recommended",
         "airbnb"
     ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
@@ -20,6 +27,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "react/prop-types": "off",
         "linebreak-style": "off",
         "react/jsx-props-no-spreading": "off",
         "react/react-in-jsx-scope": "off",
@@ -37,11 +45,11 @@
             "error",
             "ignorePackages",
             {
-              "js": "never",
-              "jsx": "never",
-              "ts": "never",
-              "tsx": "never"
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
             }
-         ]
+        ]
     }
 }

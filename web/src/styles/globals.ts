@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.colors.background};
   }
   button, body, p, a, input {
-    font-family: 'Poppins';
+    font-family: 'Roboto';
     font-size: 1rem;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.text};
