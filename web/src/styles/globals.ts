@@ -16,11 +16,6 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 75%;
     }
   }
-  @media (max-width: 600px) {
-    html {
-      font-size: 62.5%;
-    }
-  }
   body {
     background: ${({ theme }) => theme.colors.background};
   }
@@ -29,5 +24,8 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.text};
+  }
+  button {
+    cursor: pointer;
   }
 `;
