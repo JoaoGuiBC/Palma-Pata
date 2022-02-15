@@ -2,6 +2,8 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import { FiLogIn } from 'react-icons/fi';
 
+import { Button } from '../components/Button';
+
 import {
   Container,
   Logo,
@@ -13,7 +15,6 @@ import {
   Input,
   Actions,
   LogInButton,
-  Button,
 } from '../styles/Pages/Landing';
 
 const Landing: NextPage = () => (
@@ -39,11 +40,11 @@ const Landing: NextPage = () => (
         <Input placeholder="Cidade" />
       </Form>
       <Actions>
-        <LogInButton>
+        <LogInButton onClick={() => console.log('click')}>
           JÁ POSSUO CONTA
           <FiLogIn />
         </LogInButton>
-        <Button>CRIAR CONTA</Button>
+        <Button colorScheme="red" title="CRIAR CONTA" onClick={() => console.log('click2')} />
       </Actions>
     </Content>
   </Container>

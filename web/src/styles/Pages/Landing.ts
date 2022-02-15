@@ -111,29 +111,3 @@ export const LogInButton = styled.button`
     opacity: 0.5;
   }
 `;
-
-export const Button = styled.button`
-  height: 3rem;
-  padding: 0 1rem;
-
-  background: ${({ theme }) => theme.colors.attention};
-  color: ${({ theme }) => theme.colors.shape};
-  border: 2px solid ${({ theme }) => theme.colors.attention};
-
-  border-radius: 0px 0px 48px 0px;
-  box-shadow: 2px 4px 5px 2px rgba(0, 0, 0, 0.25);
-
-  font-family: 'Roboto';
-  font-weight: bold;
-  font-size: 1rem;
-
-  transition: color 0.2s, background 0.2s;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.attention_soft};
-    color: ${({ theme }) => theme.colors.attention};
-  }
-  &:active {
-    filter: brightness(90%);
-  }
-`;
