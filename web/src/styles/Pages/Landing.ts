@@ -31,7 +31,7 @@ export const Background = styled.div`
   right: -2100px;
   top: 0px;
 
-  background: ${({ theme }) => theme.colors.main};
+  background: ${({ theme }) => theme.colors.attention};
   transform: rotate(30deg);
 
   z-index: -1;
