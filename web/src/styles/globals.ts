@@ -19,7 +19,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background: ${({ theme }) => theme.colors.background};
   }
-  button, body, p, a, input {
+  button, body, p, a, input, span {
     font-family: 'Roboto';
     font-size: 1rem;
     text-decoration: none;

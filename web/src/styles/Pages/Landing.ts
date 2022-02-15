@@ -21,6 +21,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
 export const Background = styled.div`
@@ -40,10 +41,10 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
 
-  width: 29.5rem;
+  width: 25rem;
   padding: 0 2rem 1rem;
   border-radius: 0px 0px 42px 0px;
-  margin-top: 0.5rem;
+  margin-top: -5rem;
 
   box-shadow: 2px 4px 5px 2px rgba(0, 0, 0, 0.25);
   background: ${({ theme }) => theme.colors.shape};
@@ -62,28 +63,11 @@ export const DualInputs = styled.div`
   display: flex;
   gap: 1rem;
 
-  & > input:first-child {
+  & > div:first-child {
     width: 30%;
   }
-  & > input:last-child {
+  & > div:last-child {
     flex: 1;
-  }
-`;
-
-export const Input = styled.input`
-  border: none;
-  background: ${({ theme }) => theme.colors.background};
-  border-radius: 0px 0px 42px 0px;
-
-  height: 3rem;
-  margin: 0.5rem 0;
-  padding: 0 1rem;
-
-  &:focus {
-    outline: 1px solid ${({ theme }) => theme.colors.main};
-  }
-  &:not(:placeholder-shown) {
-    outline: 1px solid ${({ theme }) => theme.colors.main};
   }
 `;
 
