@@ -16,7 +16,7 @@ export const InputField = styled.input<InputProps>`
   background: ${({ theme }) => theme.colors.background};
   border-radius: 0px 0px 42px 0px;
 
-  height: 2rem;
+  height: ${({ isErrored }) => (isErrored ? '2rem' : '3rem')};
   padding: 0 1rem;
 
   ${({ theme, isErrored }) => (isErrored
