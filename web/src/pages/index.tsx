@@ -1,11 +1,13 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import Image from 'next/image';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-// import { SignUpForm } from '../components/forms/SignUpForm';
+import { AnimatePresence } from 'framer-motion';
+import { SignUpForm } from '../components/forms/SignUpForm';
 import { SignInForm } from '../components/forms/SignInForm';
-// import { signUpFormSchema } from '../utils/yupSchemas/signUpFormSchema';
+import { signUpFormSchema } from '../utils/yupSchemas/signUpFormSchema';
 import { signInFormSchema } from '../utils/yupSchemas/signInFormSchema';
 
 import {
@@ -15,16 +17,16 @@ import {
   Background,
 } from '../styles/Pages/Landing';
 
-// interface SignUpInputs {
-//   username: string;
-//   email: string;
-//   password: string;
-//   phone_number: string;
-//   street: string;
-//   street_number: string;
-//   district: string;
-//   city: string;
-// }
+interface SignUpInputs {
+  username: string;
+  email: string;
+  password: string;
+  phone_number: string;
+  street: string;
+  street_number: string;
+  district: string;
+  city: string;
+}
 
 interface SignInInputs {
   email: string;
@@ -32,11 +34,13 @@ interface SignInInputs {
 }
 
 const Landing: NextPage = () => {
-  // const {
-  //   register: registerSignUp, handleSubmit: handleSignUp, formState: { errors: signUpErrors },
-  // } = useForm<SignUpInputs>({ resolver: yupResolver(signUpFormSchema) });
+  const [selectedForm, setSelectedForm] = useState<'signUp' | 'signIn'>('signUp');
 
-  // const onSignUp: SubmitHandler<SignUpInputs> = (data) => console.log(data);
+  const {
+    register: registerSignUp, handleSubmit: handleSignUp, formState: { errors: signUpErrors },
+  } = useForm<SignUpInputs>({ resolver: yupResolver(signUpFormSchema) });
+
+  const onSignUp: SubmitHandler<SignUpInputs> = (data) => console.log(data);
 
   const {
     register: registerSignIn, handleSubmit: handleSignIn, formState: { errors: signInErrors },
@@ -46,23 +50,31 @@ const Landing: NextPage = () => {
 
   return (
     <Container>
-      <Background />
+      <Background selectedForm={selectedForm} />
       <Logo>
         <Image src="/logo.png" alt="Pata e Palma logo" width={260} height={259} />
       </Logo>
       <Content>
-        {/* <SignUpForm
-          errors={signUpErrors}
-          handleSubmit={handleSignUp}
-          onSubmit={onSignUp}
-          register={registerSignUp}
-        /> */}
-        <SignInForm
-          errors={signInErrors}
-          handleSubmit={handleSignIn}
-          onSubmit={onSignIn}
-          register={registerSignIn}
-        />
+        <AnimatePresence>
+          {selectedForm === 'signUp'
+            ? (
+              <SignUpForm
+                errors={signUpErrors}
+                handleSubmit={handleSignUp}
+                onSubmit={onSignUp}
+                register={registerSignUp}
+                onChangeForm={() => setSelectedForm('signIn')}
+              />
+            ) : (
+              <SignInForm
+                errors={signInErrors}
+                handleSubmit={handleSignIn}
+                onSubmit={onSignIn}
+                register={registerSignIn}
+                onChangeForm={() => setSelectedForm('signUp')}
+              />
+            )}
+        </AnimatePresence>
       </Content>
     </Container>
   );

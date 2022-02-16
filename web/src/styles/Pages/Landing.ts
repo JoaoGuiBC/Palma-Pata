@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface BackgroundProps {
+  selectedForm: 'signUp' | 'signIn';
+}
+
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -24,15 +28,19 @@ export const Content = styled.div`
   justify-content: center;
 `;
 
-export const Background = styled.div`
+export const Background = styled.div<BackgroundProps>`
   position: fixed;
   width: 3000px;
   height: 3000px;
   right: -2100px;
   top: 0px;
 
-  background: ${({ theme }) => theme.colors.attention};
   transform: rotate(30deg);
-
   z-index: -1;
+
+  transition: all 0.2s;
+
+  background: ${({ theme, selectedForm }) => (selectedForm === 'signIn'
+    ? theme.colors.attention
+    : theme.colors.main)};
 `;

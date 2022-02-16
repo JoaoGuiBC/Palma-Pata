@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Form = styled.form`
+export const Form = styled(motion.form)`
   display: flex;
   flex-direction: column;
 
@@ -33,7 +34,7 @@ export const DualInputs = styled.div`
   }
 `;
 
-export const Actions = styled.div`
+export const Actions = styled(motion.div)`
   display: flex;
   align-items: center;
   gap: 4rem;

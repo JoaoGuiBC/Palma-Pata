@@ -18,31 +18,48 @@ interface SignInFormProps {
   handleSubmit: UseFormHandleSubmit<any>;
   register: UseFormRegister<any>;
   errors: any;
+  onChangeForm: () => void;
 }
 
 export const SignInForm: React.FC<SignInFormProps> = ({
-  onSubmit, handleSubmit, register, errors,
+  onSubmit, handleSubmit, register, errors, onChangeForm,
 }) => (
-  <Form onSubmit={handleSubmit(onSubmit)}>
-    <SectionTitle>INFORME O SEU LOGIN</SectionTitle>
-    <Input
-      placeholder="E-mail"
-      name="email"
-      register={register}
-      validationError={errors.email}
-    />
-    <Input
-      placeholder="Senha"
-      name="password"
-      register={register}
-      validationError={errors.password}
-    />
-    <Actions>
-      <LogInButton onClick={() => console.log('click')}>
+  <>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      key="SignInForm"
+      id="SignInForm"
+      initial={{ y: '200%' }}
+      animate={{ y: 0 }}
+      transition={{ type: 'spring', bounce: 0.50, duration: 0.75 }}
+      exit={{ y: '200%' }}
+    >
+      <SectionTitle>INFORME O SEU LOGIN</SectionTitle>
+      <Input
+        placeholder="E-mail"
+        name="email"
+        register={register}
+        validationError={errors.email}
+      />
+      <Input
+        placeholder="Senha"
+        name="password"
+        register={register}
+        validationError={errors.password}
+      />
+    </Form>
+    <Actions
+      key="SignInActions"
+      initial={{ y: '400%' }}
+      animate={{ y: 0 }}
+      transition={{ type: 'spring', bounce: 0.50, duration: 0.75 }}
+      exit={{ y: '400%' }}
+    >
+      <LogInButton onClick={onChangeForm}>
         CRIAR UMA CONTA
         <FiUserPlus />
       </LogInButton>
-      <Button type="submit" colorScheme="green" title="ENTRAR" />
+      <Button type="submit" colorScheme="green" title="ENTRAR" form="SignInForm" />
     </Actions>
-  </Form>
+  </>
 );

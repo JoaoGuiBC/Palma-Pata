@@ -18,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     background: ${({ theme }) => theme.colors.background};
+    overflow: hidden;
   }
   button, body, p, a, input, span {
     font-family: 'Roboto';
