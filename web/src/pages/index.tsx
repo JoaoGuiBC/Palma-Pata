@@ -1,14 +1,16 @@
-import type { NextPage } from 'next';
-import { useState } from 'react';
 import Image from 'next/image';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
+import { useState } from 'react';
+import type { NextPage } from 'next';
+import { useMutation } from 'react-query';
 import { AnimatePresence } from 'framer-motion';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 import { SignUpForm } from '../components/forms/SignUpForm';
 import { SignInForm } from '../components/forms/SignInForm';
-import { signUpFormSchema } from '../utils/yupSchemas/signUpFormSchema';
-import { signInFormSchema } from '../utils/yupSchemas/signInFormSchema';
+import { signUpFormSchema, SignUpInputsProps } from '../utils/yupSchemas/signUpFormSchema';
+import { signInFormSchema, SignInInputsProps } from '../utils/yupSchemas/signInFormSchema';
+import { signInApi } from '../services/api/signInApi';
 
 import {
   Container,
@@ -17,36 +19,30 @@ import {
   Background,
 } from '../styles/Pages/Landing';
 
-interface SignUpInputs {
-  username: string;
-  email: string;
-  password: string;
-  phone_number: string;
-  street: string;
-  street_number: string;
-  district: string;
-  city: string;
-}
-
-interface SignInInputs {
-  email: string;
-  password: string;
-}
-
 const Landing: NextPage = () => {
   const [selectedForm, setSelectedForm] = useState<'signUp' | 'signIn'>('signUp');
+  const signInMutation = useMutation(async (data: SignInInputsProps) => signInApi(data));
 
+  /** SUBMIT SIGN UP FORM */
   const {
     register: registerSignUp, handleSubmit: handleSignUp, formState: { errors: signUpErrors },
-  } = useForm<SignUpInputs>({ resolver: yupResolver(signUpFormSchema) });
+  } = useForm<SignUpInputsProps>({ resolver: yupResolver(signUpFormSchema) });
 
-  const onSignUp: SubmitHandler<SignUpInputs> = (data) => console.log(data);
+  const onSignUp: SubmitHandler<SignUpInputsProps> = (data) => console.log(data);
 
+  /** SUBMIT SIGN IN FORM */
   const {
     register: registerSignIn, handleSubmit: handleSignIn, formState: { errors: signInErrors },
-  } = useForm<SignInInputs>({ resolver: yupResolver(signInFormSchema) });
+  } = useForm<SignInInputsProps>({ resolver: yupResolver(signInFormSchema) });
 
-  const onSignIn: SubmitHandler<SignInInputs> = (data) => console.log(data);
+  const onSignIn: SubmitHandler<SignInInputsProps> = async (data) => {
+    try {
+      const user = await signInMutation.mutateAsync(data);
+      console.log(user);
+    } catch (error: any) {
+      console.log(signInMutation.error);
+    }
+  };
 
   return (
     <Container>

@@ -1,5 +1,16 @@
 import * as yup from 'yup';
 
+export interface SignUpInputsProps {
+  username: string;
+  email: string;
+  password: string;
+  phone_number: string;
+  street: string;
+  street_number: string;
+  district: string;
+  city: string;
+}
+
 export const signUpFormSchema = yup.object({
   username: yup
     .string()

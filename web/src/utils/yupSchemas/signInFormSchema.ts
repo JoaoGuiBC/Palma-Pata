@@ -1,5 +1,10 @@
 import * as yup from 'yup';
 
+export interface SignInInputsProps {
+  email: string;
+  password: string;
+}
+
 export const signInFormSchema = yup.object({
   email: yup
     .string()
