@@ -6,6 +6,7 @@ import { prisma } from "../database/prismaClient";
 import { AppError } from "../errors/AppError";
 
 interface IUser {
+  id: string;
   username: string;
   email: string;
   phone_number: string;
@@ -53,6 +54,7 @@ class AuthenticateAdminService {
     });
 
     const filteredUser: IUser = {
+      id: user.id,
       username: user.username,
       email: user.email,
       phone_number: user.phone_number,

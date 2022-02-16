@@ -10,12 +10,25 @@ const usersRouter = Router();
 interface IUser {
   username: string;
   email: string;
-  password?: string;
+  password: string;
   phone_number: string;
   street: string;
   street_number: number;
   district: string;
   city: string;
+}
+
+interface IParsedUser {
+  id: string;
+  username: string;
+  email: string;
+  phone_number: string;
+  street: string;
+  street_number: number;
+  district: string;
+  city: string;
+  adm: boolean;
+  master: boolean;
 }
 
 interface IResetPassword {
@@ -53,18 +66,16 @@ usersRouter.post("/", async (request: Request, response: Response) => {
     parsedDistrict = district.substring(7, district.length);
   }
 
-  const newUser: IUser = await createUser.execute({
+  const newUser: IParsedUser = await createUser.execute({
     username,
     email,
-    password: password ?? "",
+    password,
     phone_number,
     street: parsedStreet,
     street_number,
     district: parsedDistrict,
     city,
   });
-
-  delete newUser.password;
 
   return response.json(newUser);
 });

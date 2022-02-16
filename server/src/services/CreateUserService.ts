@@ -14,6 +14,19 @@ interface ICreateUser {
   city: string;
 }
 
+interface IParsedUser {
+  id: string;
+  username: string;
+  email: string;
+  phone_number: string;
+  street: string;
+  street_number: number;
+  district: string;
+  city: string;
+  adm: boolean;
+  master: boolean;
+}
+
 export class CreateUserService {
   async execute({
     username,
@@ -52,7 +65,19 @@ export class CreateUserService {
         city,
       },
     });
+    const parsedNewUser: IParsedUser = {
+      username: newUser.username,
+      email: newUser.email,
+      phone_number: newUser.phone_number,
+      street: newUser.street,
+      street_number: newUser.street_number,
+      district: newUser.district,
+      city: newUser.city,
+      id: newUser.id,
+      adm: newUser.adm,
+      master: newUser.master,
+    };
 
-    return newUser;
+    return parsedNewUser;
   }
 }
