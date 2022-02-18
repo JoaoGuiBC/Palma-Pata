@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   SubmitHandler, UseFormHandleSubmit, UseFormRegister,
 } from 'react-hook-form';
@@ -8,6 +9,7 @@ import { Input } from '../../Input';
 
 import {
   Form,
+  ForgotPasswordLink,
   SectionTitle,
   Actions,
   LogInButton,
@@ -48,6 +50,9 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         register={register}
         validationError={errors.password}
       />
+      <Link href="/novaSenha/pedirSenha">
+        <ForgotPasswordLink>Esqueci minha senha</ForgotPasswordLink>
+      </Link>
     </Form>
     <Actions
       key="SignInActions"

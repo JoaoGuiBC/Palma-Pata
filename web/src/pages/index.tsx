@@ -21,7 +21,6 @@ import {
 
 const Landing: NextPage = () => {
   const [selectedForm, setSelectedForm] = useState<'signUp' | 'signIn'>('signUp');
-  const [isLoading, setIsloading] = useState(false);
   const signInMutation = useMutation(async (data: SignInInputsProps) => submitForm(data, '/sessions'));
   const signUpMutation = useMutation(async (data: SignUpInputsProps) => submitForm(data, '/users'));
 
@@ -31,12 +30,9 @@ const Landing: NextPage = () => {
   } = useForm<SignUpInputsProps>({ resolver: yupResolver(signUpFormSchema) });
 
   const onSignUp: SubmitHandler<SignUpInputsProps> = (data) => {
-    setIsloading(true);
-
     signUpMutation.mutate(data, {
       onError: (error) => console.log(error),
       onSuccess: () => setSelectedForm('signIn'),
-      onSettled: () => setIsloading(false),
     });
   };
 
@@ -46,16 +42,12 @@ const Landing: NextPage = () => {
   } = useForm<SignInInputsProps>({ resolver: yupResolver(signInFormSchema) });
 
   const onSignIn: SubmitHandler<SignInInputsProps> = (data) => {
-    setIsloading(true);
-
     signInMutation.mutate(data, {
       onError: (error) => console.log(error),
       onSuccess: (response) => {
-        console.log(response);
         localStorage.setItem('@PataEPalma:token', response.token);
         localStorage.setItem('@PataEPalma:user', JSON.stringify(response.user));
       },
-      onSettled: () => setIsloading(false),
     });
   };
 
@@ -75,7 +67,7 @@ const Landing: NextPage = () => {
                 onSubmit={onSignUp}
                 register={registerSignUp}
                 onChangeForm={() => setSelectedForm('signIn')}
-                isLoading={isLoading}
+                isLoading={signUpMutation.isLoading}
               />
             ) : (
               <SignInForm
@@ -84,7 +76,7 @@ const Landing: NextPage = () => {
                 onSubmit={onSignIn}
                 register={registerSignIn}
                 onChangeForm={() => setSelectedForm('signUp')}
-                isLoading={isLoading}
+                isLoading={signInMutation.isLoading}
               />
             )}
         </AnimatePresence>

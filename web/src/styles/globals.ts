@@ -1,6 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
+  :root {
+    --toastify-color-info: ${({ theme }) => theme.colors.logo};
+    --toastify-color-success: ${({ theme }) => theme.colors.main};
+    --toastify-color-error: ${({ theme }) => theme.colors.attention};
+
+    --toastify-toast-background: ${({ theme }) => theme.colors.shape};
+
+    --toastify-font-family: 'Roboto';
+  }
   * {
     margin: 0;
     padding: 0;

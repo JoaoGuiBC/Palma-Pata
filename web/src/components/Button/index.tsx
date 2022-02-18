@@ -7,13 +7,13 @@ import { Container } from './styles';
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   colorScheme: 'green' | 'red';
   title: string;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   colorScheme,
   title,
-  isLoading,
+  isLoading = false,
   ...rest
 }) => (
   <Container isLoading={isLoading} colorScheme={colorScheme} {...rest}>
