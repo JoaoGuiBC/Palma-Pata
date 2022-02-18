@@ -6,6 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
+import { toast } from 'react-toastify';
 import { SignUpForm } from '../components/forms/SignUpForm';
 import { SignInForm } from '../components/forms/SignInForm';
 import { signUpFormSchema, SignUpInputsProps } from '../utils/yupSchemas/signUpFormSchema';
@@ -31,7 +32,7 @@ const Landing: NextPage = () => {
 
   const onSignUp: SubmitHandler<SignUpInputsProps> = (data) => {
     signUpMutation.mutate(data, {
-      onError: (error) => console.log(error),
+      onError: (error) => { toast.error(`${error}`); },
       onSuccess: () => setSelectedForm('signIn'),
     });
   };
@@ -43,7 +44,7 @@ const Landing: NextPage = () => {
 
   const onSignIn: SubmitHandler<SignInInputsProps> = (data) => {
     signInMutation.mutate(data, {
-      onError: (error) => console.log(error),
+      onError: (error) => { toast.error(`${error}`); },
       onSuccess: (response) => {
         localStorage.setItem('@PataEPalma:token', response.token);
         localStorage.setItem('@PataEPalma:user', JSON.stringify(response.user));
