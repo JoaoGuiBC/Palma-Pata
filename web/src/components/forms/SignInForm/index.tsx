@@ -19,10 +19,11 @@ interface SignInFormProps {
   register: UseFormRegister<any>;
   errors: any;
   onChangeForm: () => void;
+  isLoading: boolean;
 }
 
 export const SignInForm: React.FC<SignInFormProps> = ({
-  onSubmit, handleSubmit, register, errors, onChangeForm,
+  onSubmit, handleSubmit, register, errors, onChangeForm, isLoading,
 }) => (
   <>
     <Form
@@ -59,7 +60,13 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         CRIAR UMA CONTA
         <FiUserPlus />
       </LogInButton>
-      <Button type="submit" colorScheme="green" title="ENTRAR" form="SignInForm" />
+      <Button
+        type="submit"
+        colorScheme="green"
+        title="ENTRAR"
+        form="SignInForm"
+        isLoading={isLoading}
+      />
     </Actions>
   </>
 );

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 interface ButtonProps {
-  colorScheme: 'green' | 'red'
+  colorScheme: 'green' | 'red';
+  isLoading: boolean;
 }
 
 export const Container = styled.button<ButtonProps>`
@@ -24,6 +25,12 @@ export const Container = styled.button<ButtonProps>`
   font-size: 1rem;
 
   transition: color 0.2s, background 0.2s;
+  user-select: none;
+
+  ${({ isLoading }) => isLoading && `
+  pointer-events: none;
+  padding-right: 1.5rem;
+  `}
 
   &:hover {
     background: ${({ theme, colorScheme }) => (colorScheme === 'red'

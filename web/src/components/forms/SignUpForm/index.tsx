@@ -20,10 +20,11 @@ interface SignUpFormProps {
   register: UseFormRegister<any>;
   errors: any;
   onChangeForm: () => void;
+  isLoading: boolean;
 }
 
 export const SignUpForm: React.FC<SignUpFormProps> = ({
-  onSubmit, handleSubmit, register, errors, onChangeForm,
+  onSubmit, handleSubmit, register, errors, onChangeForm, isLoading,
 }) => (
   <>
     <Form
@@ -104,7 +105,13 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         JÁ POSSUO CONTA
         <FiLogIn />
       </LogInButton>
-      <Button type="submit" colorScheme="red" title="CRIAR CONTA" form="SignUpForm" />
+      <Button
+        type="submit"
+        colorScheme="red"
+        title="CRIAR CONTA"
+        form="SignUpForm"
+        isLoading={isLoading}
+      />
     </Actions>
   </>
 );
