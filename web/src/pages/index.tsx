@@ -22,8 +22,16 @@ import {
 
 const Landing: NextPage = () => {
   const [selectedForm, setSelectedForm] = useState<'signUp' | 'signIn'>('signUp');
-  const signInMutation = useMutation(async (data: SignInInputsProps) => submitForm(data, '/sessions'));
-  const signUpMutation = useMutation(async (data: SignUpInputsProps) => submitForm(data, '/users'));
+  const signInMutation = useMutation(async (data: SignInInputsProps) => submitForm({
+    data,
+    url: '/sessions',
+    method: 'post',
+  }));
+  const signUpMutation = useMutation(async (data: SignUpInputsProps) => submitForm({
+    data,
+    url: '/users',
+    method: 'post',
+  }));
 
   /** SUBMIT SIGN UP FORM */
   const {

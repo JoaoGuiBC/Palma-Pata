@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 
+import { api } from '../../services/api';
+
 import {
   requestPasswordResetFormSchema,
   RequestPasswordResetInputsProps,
@@ -20,10 +22,9 @@ import {
   SectionTitle,
   Actions,
   ReturnButton,
-} from '../../styles/Pages/novaSenha/atualizarSenha';
-import { api } from '../../services/api';
+} from '../../styles/Pages/novaSenha/pedirSenha';
 
-const NovaSenha: React.FC = () => {
+const PedirSenha: React.FC = () => {
   const { isLoading, mutate } = useMutation(async (email: string) => {
     try {
       const response = await api.get(`/emails/recoverPassword/${email}`);
@@ -84,4 +85,4 @@ const NovaSenha: React.FC = () => {
   );
 };
 
-export default NovaSenha;
+export default PedirSenha;

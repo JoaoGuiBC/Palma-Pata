@@ -13,6 +13,8 @@ export const Container = styled.div`
   gap: 1.5rem;
 `;
 
+export const Title = styled.strong``;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
