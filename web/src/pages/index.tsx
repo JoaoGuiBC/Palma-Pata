@@ -54,8 +54,13 @@ const Landing: NextPage = () => {
     signInMutation.mutate(data, {
       onError: (error) => { toast.error(`${error}`); },
       onSuccess: (response) => {
-        localStorage.setItem('@PataEPalma:token', response.token);
-        localStorage.setItem('@PataEPalma:user', JSON.stringify(response.user));
+        fetch('/api/auth/signIn', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: response.token, user: JSON.stringify(response.user) }),
+        });
       },
     });
   };
