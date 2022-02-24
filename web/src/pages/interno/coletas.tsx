@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FiLogOut } from 'react-icons/fi';
 import type { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 import InfoImage from '../../../public/infoTable.svg';
 import { Button } from '../../components/Button';
@@ -42,6 +43,8 @@ interface ColetasProps {
 }
 
 const Coletas: React.FC<ColetasProps> = ({ user }) => {
+  const router = useRouter();
+
   const {
     register, handleSubmit, formState: { errors },
   } = useForm<MakeRequestInputs>({ resolver: yupResolver(makeRequestFormSchema) });
@@ -50,8 +53,16 @@ const Coletas: React.FC<ColetasProps> = ({ user }) => {
     console.log(data);
   };
 
-  const handleLogOut = () => {
-    console.log('log out');
+  const handleLogOut = async () => {
+    await fetch('/api/auth/signOut', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+
+    router.push('/');
   };
 
   return (
