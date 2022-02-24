@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 
 import { prisma } from "../database/prismaClient";
+import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 import { CreateRequestService } from "../services/CreateRequestService";
 
 const requestsRouter = Router();
@@ -30,18 +31,27 @@ requestsRouter.get("/", async (_: Request, response: Response) => {
   return response.json(requests);
 });
 
-requestsRouter.post("/", async (request: Request, response: Response) => {
-  const { id_user, quantity }: IRequest = request.body;
+requestsRouter.post(
+  "/",
+  ensureAuthenticated,
+  async (request: Request, response: Response) => {
+    const { quantity }: IRequest = request.body;
+    const { user } = request;
 
-  const createRequest = new CreateRequestService();
+    const createRequest = new CreateRequestService();
 
-  const newRequest = await createRequest.execute({ id_user, quantity });
+    const newRequest = await createRequest.execute({
+      id_user: user.id,
+      quantity,
+    });
 
-  return response.json(newRequest);
-});
+    return response.json(newRequest);
+  }
+);
 
 requestsRouter.put(
   "/complete",
+  ensureAuthenticated,
   async (request: Request, response: Response) => {
     const { request_id }: ICompleteRequest = request.body;
 
