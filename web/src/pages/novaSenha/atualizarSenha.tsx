@@ -14,7 +14,7 @@ import { submitForm } from '../../services/api/submitForm';
 import {
   resetPasswordFormSchema,
   ResetPasswordInputsProps,
-} from '../../utils/yupSchemas/ResetPasswordFormSchema';
+} from '../../utils/yupSchemas/resetPasswordFormSchema';
 
 import {
   Container,
