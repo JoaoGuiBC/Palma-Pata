@@ -36,12 +36,12 @@ requestsRouter.post(
   ensureAuthenticated,
   async (request: Request, response: Response) => {
     const { quantity }: IRequest = request.body;
-    const { user } = request;
+    const { id } = request.user;
 
     const createRequest = new CreateRequestService();
 
     const newRequest = await createRequest.execute({
-      id_user: user.id,
+      id_user: id,
       quantity,
     });
 
