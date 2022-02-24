@@ -4,8 +4,8 @@ import { resolve } from "path";
 import { prisma } from "../database/prismaClient";
 import { AppError } from "../errors/AppError";
 
-import { SendEmailService } from "../services/SendEmailService";
-import { CreateResetPasswordTokenService } from "../services/CreateResetPasswordTokenService";
+import { SendEmailService } from "../services/emails/SendEmailService";
+import { CreateResetPasswordTokenService } from "../services/emails/CreateResetPasswordTokenService";
 
 const emailsRouter = Router();
 

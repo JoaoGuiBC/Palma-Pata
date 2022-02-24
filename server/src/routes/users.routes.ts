@@ -1,9 +1,11 @@
 import { Request, Response, Router } from "express";
 
 import { prisma } from "../database/prismaClient";
-import { CreateUserService } from "../services/CreateUserService";
-import { UpdateUserPasswordService } from "../services/UpdateUserPasswordService";
-import { VerifyPasswordTokenService } from "../services/VerifyPasswordTokenService";
+import ensureAuthenticated from "../middlewares/ensureAuthenticated";
+import { CreateUserService } from "../services/users/CreateUserService";
+import { UpdateUserInfoService } from "../services/users/UpdateUserInfoService";
+import { UpdateUserPasswordService } from "../services/users/UpdateUserPasswordService";
+import { VerifyPasswordTokenService } from "../services/users/VerifyPasswordTokenService";
 
 const usersRouter = Router();
 
@@ -99,6 +101,36 @@ usersRouter.put(
       status: "success",
       message: "Senha atualizada com sucesso",
     });
+  }
+);
+
+usersRouter.put(
+  "/",
+  ensureAuthenticated,
+  async (request: Request, response: Response) => {
+    const { id } = request.user;
+    const {
+      username,
+      phone_number,
+      street,
+      street_number,
+      district,
+      city,
+    }: Omit<IUser, "email" | "password"> = request.body;
+
+    const updateUserInfo = new UpdateUserInfoService();
+
+    const updatedUser = await updateUserInfo.execute({
+      user_id: id,
+      username,
+      phone_number,
+      street,
+      street_number,
+      district,
+      city,
+    });
+
+    return response.json(updatedUser);
   }
 );
 

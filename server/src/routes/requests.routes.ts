@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 
 import { prisma } from "../database/prismaClient";
 import ensureAuthenticated from "../middlewares/ensureAuthenticated";
-import { CreateRequestService } from "../services/CreateRequestService";
+import { CreateRequestService } from "../services/requests/CreateRequestService";
 
 const requestsRouter = Router();
 

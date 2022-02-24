@@ -1,4 +1,4 @@
-import { prisma } from "../database/prismaClient";
+import { prisma } from "../../database/prismaClient";
 
 interface ITokenData {
   id_user: string;
