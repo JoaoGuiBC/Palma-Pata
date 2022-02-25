@@ -46,12 +46,16 @@ export class UpdateUserInfoService {
     });
 
     const user = {
+      id: updatedUser.id,
       username: updatedUser.username,
+      email: updatedUser.email,
       phone_number: updatedUser.phone_number,
       street: updatedUser.street,
       street_number: updatedUser.street_number,
       district: updatedUser.district,
       city: updatedUser.city,
+      adm: updatedUser.adm,
+      master: updatedUser.master,
     };
 
     return user;

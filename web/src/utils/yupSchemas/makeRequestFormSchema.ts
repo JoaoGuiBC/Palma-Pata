@@ -33,6 +33,7 @@ export const makeRequestFormSchema = yup.object({
     .required('Campo obrigatório'),
   quantity: yup
     .number()
+    .positive('Número inválido')
     .typeError('Número inválido')
     .required('Campo obrigatório'),
 });

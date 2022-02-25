@@ -5,6 +5,8 @@ import { FiLogOut } from 'react-icons/fi';
 import type { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
+import { useMutation } from 'react-query';
+import { toast } from 'react-toastify';
 import InfoImage from '../../../public/infoTable.svg';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -24,6 +26,7 @@ import {
   LogInButton,
   InfoContainer,
 } from '../../styles/Pages/interno/coletas';
+import { makeNewRequest } from '../../services/api/makeNewRequest';
 
 interface IUser {
   adm: boolean
@@ -40,17 +43,35 @@ interface IUser {
 
 interface ColetasProps {
   user: IUser;
+  token: string;
 }
 
-const Coletas: React.FC<ColetasProps> = ({ user }) => {
+const Coletas: React.FC<ColetasProps> = ({ user, token }) => {
   const router = useRouter();
+
+  const mutation = useMutation(async (data: MakeRequestInputs) => makeNewRequest({
+    data,
+    token,
+  }));
 
   const {
     register, handleSubmit, formState: { errors },
   } = useForm<MakeRequestInputs>({ resolver: yupResolver(makeRequestFormSchema) });
 
   const onSubmit: SubmitHandler<MakeRequestInputs> = (data) => {
-    console.log(data);
+    mutation.mutate(data, {
+      onError: (error) => { toast.error(`${error}`); },
+      onSuccess: (response) => {
+        toast.success('Pedido feito com sucesso, em breve você receberá uma visita da coleta');
+        fetch('/api/auth/signIn', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token, user: JSON.stringify(response) }),
+        });
+      },
+    });
   };
 
   const handleLogOut = async () => {
@@ -132,6 +153,7 @@ const Coletas: React.FC<ColetasProps> = ({ user }) => {
           <Input
             placeholder="Quantidade de bolsas"
             name="quantity"
+            type="number"
             register={register}
             validationError={errors.quantity}
           />
@@ -147,7 +169,7 @@ const Coletas: React.FC<ColetasProps> = ({ user }) => {
             colorScheme="green"
             title="CHAMAR COLETA"
             form="MakeRequestForm"
-            isLoading={false}
+            isLoading={mutation.isLoading}
           />
         </Actions>
       </FormContainer>
@@ -161,11 +183,12 @@ const Coletas: React.FC<ColetasProps> = ({ user }) => {
 export default Coletas;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { PataEPalmaUser: user } = req.cookies;
+  const { PataEPalmaUser: user, PataEPalmaToken: token } = req.cookies;
 
   return {
     props: {
       user: JSON.parse(user),
+      token,
     },
   };
 };
