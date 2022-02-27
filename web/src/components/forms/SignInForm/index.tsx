@@ -49,6 +49,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
         name="password"
         register={register}
         validationError={errors.password}
+        isPassword
       />
       <Link href="/novaSenha/pedirSenha">
         <ForgotPasswordLink>Esqueci minha senha</ForgotPasswordLink>

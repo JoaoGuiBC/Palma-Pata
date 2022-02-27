@@ -54,6 +54,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
         name="password"
         register={register}
         validationError={errors.password}
+        isPassword
       />
       <Input
         placeholder="Telefone"

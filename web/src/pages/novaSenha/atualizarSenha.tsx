@@ -62,6 +62,7 @@ const AtualizarSenha: React.FC = () => {
           name="password"
           register={register}
           validationError={errors.password}
+          isPassword
         />
       </Form>
       <Actions>
