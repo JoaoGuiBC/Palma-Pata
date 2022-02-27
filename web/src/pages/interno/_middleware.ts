@@ -27,7 +27,13 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  if (JSON.parse(user).adm) {
+  if (JSON.parse(user).adm && request.nextUrl.pathname === '/interno/coletas') {
+    url.pathname = '/interno/dashboard/listaPessoas';
+    return NextResponse.redirect(url);
+  }
+
+  if (!JSON.parse(user).adm && request.nextUrl.pathname === '/interno/dashboard/listaPessoas') {
+    url.pathname = '/interno/coletas';
     return NextResponse.redirect(url);
   }
 

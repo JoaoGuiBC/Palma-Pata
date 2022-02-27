@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import type { NextPage } from 'next';
+import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
 import { AnimatePresence } from 'framer-motion';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { toast } from 'react-toastify';
 import { SignUpForm } from '../components/forms/SignUpForm';
 import { SignInForm } from '../components/forms/SignInForm';
+import LogoImage from '../../public/logo.png';
 import { signUpFormSchema, SignUpInputsProps } from '../utils/yupSchemas/signUpFormSchema';
 import { signInFormSchema, SignInInputsProps } from '../utils/yupSchemas/signInFormSchema';
 import { submitForm } from '../services/api/submitForm';
@@ -69,7 +70,7 @@ const Landing: NextPage = () => {
     <Container>
       <Background selectedForm={selectedForm} />
       <Logo>
-        <Image src="/logo.png" alt="Pata e Palma logo" width={260} height={259} />
+        <Image src={LogoImage} alt="Pata e Palma logo" />
       </Logo>
       <Content>
         <AnimatePresence>
