@@ -23,7 +23,7 @@ export const NavContainer = styled.nav`
   border-radius: 0px 0px 42px 0px;
 `;
 
-export const Button = styled.button`
+export const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

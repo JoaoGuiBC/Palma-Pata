@@ -28,17 +28,17 @@ export const NavBar: React.FC = () => {
       <NavContainer>
         <Button>
           <Link href="/interno/dashboard/listaPessoas">
-            <FiUsers />
+            <div><FiUsers /></div>
           </Link>
         </Button>
         <Button>
           <Link href="/interno/dashboard/melhoresContribuintes">
-            <FiAward />
+            <div><FiAward /></div>
           </Link>
         </Button>
         <Button>
           <Link href="/interno/dashboard/pedidosColetas">
-            <FiClipboard />
+            <div><FiClipboard /></div>
           </Link>
         </Button>
       </NavContainer>
