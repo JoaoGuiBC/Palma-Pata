@@ -7,6 +7,8 @@ export const Container = styled.div`
 
   gap: 3.5rem;
   height: 100vh;
+
+  z-index: 10;
 `;
 
 export const NavContainer = styled.nav`
