@@ -1,6 +1,7 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextLayoutComponentType } from 'next';
+import type { ReactElement } from 'react';
 
-import { NavBar } from '../../../components/NavBar';
+import Layout from '../../../components/DashboardLayout';
 
 interface IUser {
   adm: boolean
@@ -20,18 +21,26 @@ interface MelhoresContribuintesProps {
   token: string;
 }
 
-const MelhoresContribuintes: React.FC<MelhoresContribuintesProps> = ({ user, token }) => {
+const MelhoresContribuintes: NextLayoutComponentType<MelhoresContribuintesProps> = ({
+  user,
+  token,
+}) => {
   console.log(user, token);
 
   return (
-    <div>
-      <NavBar />
-      <div>Olá melhores contribuintes</div>
-    </div>
+    <div>Olá melhores contribuintes</div>
   );
 };
 
 export default MelhoresContribuintes;
+
+MelhoresContribuintes.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { PataEPalmaUser: user, PataEPalmaToken: token } = req.cookies;

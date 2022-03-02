@@ -1,8 +1,9 @@
 import Head from 'next/head';
-import { AppProps } from 'next/app';
 import { QueryClientProvider } from 'react-query';
 import { ThemeProvider } from 'styled-components';
 import { ToastContainer } from 'react-toastify';
+import { AppContext, AppInitialProps, AppLayoutProps } from 'next/app';
+import type { NextComponentType } from 'next';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,8 +12,13 @@ import Theme from '../styles/theme';
 
 import { queryClient } from '../services/queryClient';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
+const MyApp: NextComponentType<AppContext, AppInitialProps, AppLayoutProps> = ({
+  Component,
+  pageProps,
+}: AppLayoutProps) => {
+  const getLayout = Component.getLayout || ((page) => page);
+
+  return getLayout(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={Theme}>
         <ToastContainer />
@@ -22,8 +28,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <GlobalStyle />
         <Component {...pageProps} />
       </ThemeProvider>
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
-}
+};
 
 export default MyApp;

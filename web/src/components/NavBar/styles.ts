@@ -1,4 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
+
+import theme from '../../styles/theme';
 
 export const Container = styled.div`
   display: flex;
@@ -15,12 +18,22 @@ export const NavContainer = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
   width: 4.5rem;
-  background: ${({ theme }) => theme.colors.shape};
+  background: ${theme.colors.shape};
 
   box-shadow: 2px 4px 5px 2px rgba(0, 0, 0, 0.25);
   border-radius: 0px 0px 42px 0px;
+`;
+
+export const Indicator = styled(motion.div)`
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  background: ${theme.colors.main};
+
+  border-radius: 42px;
 `;
 
 export const Button = styled.div`
@@ -30,13 +43,17 @@ export const Button = styled.div`
 
   font-size: 2rem;
   margin-bottom: 2.5rem;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${theme.colors.text};
 
   background: transparent;
   border: none;
+  z-index: 10;
 
-  &:first-child {
+  &:nth-child(2) {
     margin-top: 2.5rem;
+  }
+  & svg {
+    stroke-width: 1.25px;
   }
 `;
 
@@ -49,8 +66,8 @@ export const LogOutButton = styled.button`
   width: 4.5rem;
   height: 4.5rem;
 
-  background: #F34B60;
-  color: ${({ theme }) => theme.colors.shape};
+  background: ${theme.colors.attention};
+  color: ${theme.colors.shape};
 
   box-shadow: 2px 4px 5px 2px rgba(0, 0, 0, 0.25);
   border-radius: 42px;
@@ -63,5 +80,8 @@ export const LogOutButton = styled.button`
   }
   &:hover {
     filter: brightness(0.8);
+  }
+  & svg {
+    stroke-width: 1.25px;
   }
 `;

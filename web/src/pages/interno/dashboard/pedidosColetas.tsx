@@ -1,6 +1,7 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextLayoutComponentType } from 'next';
+import type { ReactElement } from 'react';
 
-import { NavBar } from '../../../components/NavBar';
+import Layout from '../../../components/DashboardLayout';
 
 interface IUser {
   adm: boolean
@@ -20,18 +21,23 @@ interface PedidosColetasProps {
   token: string;
 }
 
-const PedidosColetas: React.FC<PedidosColetasProps> = ({ user, token }) => {
+const PedidosColetas: NextLayoutComponentType<PedidosColetasProps> = ({ user, token }) => {
   console.log(user, token);
 
   return (
-    <div>
-      <NavBar />
-      <div>Olá pedidos de coletas</div>
-    </div>
+    <div>Olá pedidos de coletas</div>
   );
 };
 
 export default PedidosColetas;
+
+PedidosColetas.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { PataEPalmaUser: user, PataEPalmaToken: token } = req.cookies;
