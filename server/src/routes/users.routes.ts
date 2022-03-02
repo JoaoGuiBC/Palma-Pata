@@ -3,6 +3,7 @@ import { Request, Response, Router } from "express";
 import { prisma } from "../database/prismaClient";
 import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 import { CreateUserService } from "../services/users/CreateUserService";
+import { UpdateUserPermission } from "../services/users/UpdateUserPermission";
 import { UpdateUserInfoService } from "../services/users/UpdateUserInfoService";
 import { UpdateUserPasswordService } from "../services/users/UpdateUserPasswordService";
 import { VerifyPasswordTokenService } from "../services/users/VerifyPasswordTokenService";
@@ -36,6 +37,15 @@ interface IParsedUser {
 interface IResetPassword {
   token: string;
   new_password: string;
+}
+
+interface IPermissionUpdateUser {
+  user_id: string;
+  adm: boolean;
+}
+
+interface IUpdateUserInfo {
+  users: IPermissionUpdateUser[];
 }
 
 usersRouter.get("/", async (_: Request, response: Response) => {
@@ -131,6 +141,22 @@ usersRouter.put(
     });
 
     return response.json(updatedUser);
+  }
+);
+
+usersRouter.patch(
+  "/updatePermission",
+  ensureAuthenticated,
+  async (request: Request, response: Response) => {
+    const { users }: IUpdateUserInfo = request.body;
+
+    const updateUserPermission = new UpdateUserPermission();
+
+    await updateUserPermission.execute({
+      users,
+    });
+
+    return response.status(200).json({ message: "Informações atualizadas" });
   }
 );
 

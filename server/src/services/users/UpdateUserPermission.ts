@@ -10,7 +10,7 @@ interface IUpdateUserInfo {
   users: IUser[];
 }
 
-export class UpdateUserInfoService {
+export class UpdateUserPermission {
   async execute({ users }: IUpdateUserInfo) {
     try {
       users.map(async (user) => {
