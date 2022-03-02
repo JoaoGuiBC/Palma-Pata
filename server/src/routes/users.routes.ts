@@ -40,7 +40,7 @@ interface IResetPassword {
 }
 
 interface IPermissionUpdateUser {
-  user_id: string;
+  id: string;
   adm: boolean;
 }
 
@@ -49,7 +49,30 @@ interface IUpdateUserInfo {
 }
 
 usersRouter.get("/", async (_: Request, response: Response) => {
-  const users = await prisma.users.findMany();
+  const users = await prisma.users.findMany({
+    where: {
+      master: {
+        equals: false,
+      },
+    },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      phone_number: true,
+      street: true,
+      street_number: true,
+      district: true,
+      city: true,
+      adm: true,
+      master: true,
+      created_at: false,
+      password: false,
+    },
+    orderBy: {
+      username: "asc",
+    },
+  });
 
   return response.json(users);
 });

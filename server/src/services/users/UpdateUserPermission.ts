@@ -2,7 +2,7 @@ import { prisma } from "../../database/prismaClient";
 import { AppError } from "../../errors/AppError";
 
 interface IUser {
-  user_id: string;
+  id: string;
   adm: boolean;
 }
 
@@ -16,7 +16,7 @@ export class UpdateUserPermission {
       users.map(async (user) => {
         await prisma.users.update({
           where: {
-            id: user.user_id,
+            id: user.id,
           },
           data: {
             adm: user.adm,

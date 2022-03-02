@@ -7,7 +7,7 @@ interface ButtonProps {
 
 export const Container = styled.button<ButtonProps>`
   height: 3rem;
-  padding: 0 1rem;
+  padding: 0 1.5rem 0 1rem;
 
   color: ${({ theme }) => theme.colors.shape};
   background: ${({ theme, colorScheme }) => (colorScheme === 'red'
