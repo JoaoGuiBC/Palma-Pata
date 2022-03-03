@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
 import { AnimatePresence } from 'framer-motion';
@@ -34,6 +35,8 @@ const Landing: NextPage = () => {
     method: 'post',
   }));
 
+  const { push } = useRouter();
+
   /** SUBMIT SIGN UP FORM */
   const {
     register: registerSignUp, handleSubmit: handleSignUp, formState: { errors: signUpErrors },
@@ -61,7 +64,7 @@ const Landing: NextPage = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ token: response.token, user: JSON.stringify(response.user) }),
-        });
+        }).then(() => push('/interno/dashboard/listaPessoas'));
       },
     });
   };
