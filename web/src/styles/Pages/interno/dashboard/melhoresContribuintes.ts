@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Content = styled.div`
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: flex-start;
   height: 100%;
   padding: 4rem 0;
@@ -13,7 +13,7 @@ export const Content = styled.div`
 export const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0 1rem;
-  width: 65rem;
+  width: 30rem;
 `;
 
 export const TableHead = styled.thead`
@@ -34,9 +34,6 @@ export const TableRow = styled.tr`
   height: 4rem;
   max-height: 4rem;
 
-  & td.adm {
-    text-align: center;
-  }
   & td:last-child {
     border-bottom-right-radius: 42px;
     padding-right: 1rem;
@@ -69,10 +66,4 @@ export const LoadingContainer = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-`;
-
-export const ButtonContainer = styled.div`
-  position: fixed;
-  right: 2.5rem;
-  bottom: 2.5rem;
 `;

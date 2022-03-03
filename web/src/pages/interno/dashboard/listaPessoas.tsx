@@ -47,7 +47,7 @@ const ListaPessoas: NextLayoutComponentType<ListaPessoasProps> = ({ user, token 
   const [isPatching, setIsPatching] = useState(false);
 
   const { data, isFetching } = useQuery('listUsers', () => api.get<IUser[]>('/users'), {
-    staleTime: 1000 * 60 * 10, // minutes
+    staleTime: 1000 * 60 * 20, // 20 minutes
   });
 
   const handleUpdateCheck = (listedUser: IUser) => {
