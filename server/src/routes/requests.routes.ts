@@ -2,7 +2,9 @@ import { Request, Response, Router } from "express";
 
 import { prisma } from "../database/prismaClient";
 import ensureAuthenticated from "../middlewares/ensureAuthenticated";
+
 import { CreateRequestService } from "../services/requests/CreateRequestService";
+import { ListBestContributors } from "../services/requests/ListBestContributors";
 
 const requestsRouter = Router();
 
@@ -30,6 +32,17 @@ requestsRouter.get("/", async (_: Request, response: Response) => {
 
   return response.json(requests);
 });
+
+requestsRouter.get(
+  "/bestContributors",
+  async (_: Request, response: Response) => {
+    const listContributors = new ListBestContributors();
+
+    const list = await listContributors.execute();
+
+    return response.json(list);
+  }
+);
 
 requestsRouter.post(
   "/",

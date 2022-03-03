@@ -47,3 +47,12 @@ model ResetTokens {
 
   @@map("reset_tokens")
 }
+
+model BestContributorAddress {
+  id       String @id @default(uuid())
+  city     String
+  district String
+  quantity Int
+
+  @@map("best_contributor_address")
+}

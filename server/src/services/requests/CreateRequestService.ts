@@ -27,6 +27,32 @@ export class CreateRequestService {
       },
     });
 
+    const contributorAddress = await prisma.bestContributorAddress.findFirst({
+      where: {
+        city: userExist.city,
+        district: userExist.district,
+      },
+    });
+
+    if (!contributorAddress) {
+      await prisma.bestContributorAddress.create({
+        data: {
+          city: userExist.city,
+          district: userExist.district,
+          quantity,
+        },
+      });
+    } else {
+      await prisma.bestContributorAddress.update({
+        where: {
+          id: contributorAddress.id,
+        },
+        data: {
+          quantity: contributorAddress.quantity + quantity,
+        },
+      });
+    }
+
     return newRequest;
   }
 }
