@@ -30,6 +30,8 @@
         "no-undef": "off",
         "react/prop-types": "off",
         "linebreak-style": "off",
+        "camelcase": "off",
+        "react/jsx-one-expression-per-line": "off",
         "react/jsx-props-no-spreading": "off",
         "react/react-in-jsx-scope": "off",
         "react/function-component-definition": "off",

@@ -32,6 +32,6 @@ export default async function ensureAuthenticated(
 
     return next();
   } catch {
-    throw new AppError("Token de autenticação inválido", 401);
+    throw new AppError("Autenticação inválida, por favor refaça login", 401);
   }
 }

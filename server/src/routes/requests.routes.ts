@@ -4,6 +4,7 @@ import { prisma } from "../database/prismaClient";
 import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 
 import { CreateRequestService } from "../services/requests/CreateRequestService";
+import { ListUncollectedRequests } from "../services/requests/ListUncollectedRequests";
 import { ListBestContributors } from "../services/requests/ListBestContributors";
 
 const requestsRouter = Router();
@@ -24,13 +25,11 @@ requestsRouter.get("/listAll", async (_: Request, response: Response) => {
 });
 
 requestsRouter.get("/", async (_: Request, response: Response) => {
-  const requests = await prisma.requests.findMany({
-    where: {
-      collected: false,
-    },
-  });
+  const listRequest = new ListUncollectedRequests();
 
-  return response.json(requests);
+  const list = await listRequest.execute();
+
+  return response.json(list);
 });
 
 requestsRouter.get(

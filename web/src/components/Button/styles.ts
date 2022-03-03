@@ -3,6 +3,7 @@ import styled from 'styled-components';
 interface ButtonProps {
   colorScheme: 'green' | 'red';
   isLoading: boolean;
+  hideShadow: boolean;
 }
 
 export const Container = styled.button<ButtonProps>`
@@ -18,7 +19,7 @@ export const Container = styled.button<ButtonProps>`
     : theme.colors.main)};
 
   border-radius: 0px 0px 48px 0px;
-  box-shadow: 2px 4px 5px 2px rgba(0, 0, 0, 0.25);
+  ${({ hideShadow }) => !hideShadow && 'box-shadow: 2px 4px 5px 2px rgba(0, 0, 0, 0.25);'};
 
   font-family: 'Roboto';
   font-weight: bold;

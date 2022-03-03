@@ -8,15 +8,22 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   colorScheme: 'green' | 'red';
   title: string;
   isLoading?: boolean;
+  hideShadow?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   colorScheme,
   title,
   isLoading = false,
+  hideShadow = false,
   ...rest
 }) => (
-  <Container isLoading={isLoading} colorScheme={colorScheme} {...rest}>
+  <Container
+    isLoading={isLoading}
+    hideShadow={hideShadow}
+    colorScheme={colorScheme}
+    {...rest}
+  >
     {
       isLoading
         ? <TailSpin width={25} height={25} color={theme.colors.shape} />
