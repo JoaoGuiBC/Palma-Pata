@@ -17,9 +17,7 @@ export class SendEmailService {
     subject,
   }: IPasswordRecovery) {
     const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false,
+      service: "gmail",
       auth: {
         user: process.env.EMAIL_ACCOUNT,
         pass: process.env.EMAIL_PASSWORD,
@@ -30,15 +28,11 @@ export class SendEmailService {
     const templateParse = handlebars.compile(templateFileContent);
     const htmlTemplate = templateParse(templateVariables);
 
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: `"Pata e Palma" < ${process.env.EMAIL_ACCOUNT}>`,
       to: email,
       subject,
       html: htmlTemplate,
     });
-
-    console.log("Message sent: %s", info.messageId);
-
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   }
 }
