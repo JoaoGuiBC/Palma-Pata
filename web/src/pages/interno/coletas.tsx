@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 
+import { useEffect } from 'react';
 import InfoImage from '../../../public/infoTable.svg';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -85,6 +86,16 @@ const Coletas: React.FC<ColetasProps> = ({ user, token }) => {
 
     router.push('/');
   };
+
+  useEffect(() => {
+    fetch('/api/auth/signIn', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, user: JSON.stringify(user) }),
+    });
+  });
 
   return (
     <Container>

@@ -1,5 +1,5 @@
-import { NextLayoutComponentType } from 'next';
-import type { ReactElement } from 'react';
+import { GetServerSideProps, NextLayoutComponentType } from 'next';
+import { ReactElement, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import { useQuery } from 'react-query';
 
@@ -36,7 +36,28 @@ interface IContributorsData {
   bestContributors: IBestContributors[],
 }
 
-const MelhoresContribuintes: NextLayoutComponentType = () => {
+interface IUser {
+  adm: boolean
+  city: string
+  district: string
+  email: string
+  id: string
+  master: boolean
+  phone_number: string
+  street: string
+  street_number: number
+  username: string
+}
+
+interface MelhoresContribuintesProps {
+  user: IUser;
+  token: string;
+}
+
+const MelhoresContribuintes: NextLayoutComponentType<MelhoresContribuintesProps> = ({
+  token,
+  user,
+}) => {
   const { data, isFetching } = useQuery(
     'listContributors',
     () => api.get<IContributorsData>('/requests/bestContributors'),
@@ -44,6 +65,16 @@ const MelhoresContribuintes: NextLayoutComponentType = () => {
       staleTime: 1000 * 60 * 30, // 30 minutes
     },
   );
+
+  useEffect(() => {
+    fetch('/api/auth/signIn', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, user: JSON.stringify(user) }),
+    });
+  });
 
   return (
     <Content>
@@ -103,4 +134,15 @@ MelhoresContribuintes.getLayout = function getLayout(page: ReactElement) {
       {page}
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const { PataEPalmaUser: user, PataEPalmaToken: token } = req.cookies;
+
+  return {
+    props: {
+      user: JSON.parse(user),
+      token,
+    },
+  };
 };

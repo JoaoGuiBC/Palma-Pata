@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextLayoutComponentType } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
@@ -87,6 +87,16 @@ const ListaPessoas: NextLayoutComponentType<ListaPessoasProps> = ({ user, token 
       }
     }
   };
+
+  useEffect(() => {
+    fetch('/api/auth/signIn', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, user: JSON.stringify(user) }),
+    });
+  });
 
   return (
     <Content>

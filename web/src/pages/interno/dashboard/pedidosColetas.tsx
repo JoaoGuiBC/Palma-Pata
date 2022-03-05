@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextLayoutComponentType } from 'next';
-import type { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
@@ -16,7 +16,21 @@ import {
 } from '../../../styles/Pages/interno/dashboard/pedidosColetas';
 import theme from '../../../styles/theme';
 
+interface IUser {
+  adm: boolean
+  city: string
+  district: string
+  email: string
+  id: string
+  master: boolean
+  phone_number: string
+  street: string
+  street_number: number
+  username: string
+}
+
 interface PedidosColetasProps {
+  user: IUser;
   token: string;
 }
 
@@ -31,7 +45,7 @@ interface IRequest {
   city: string,
 }
 
-const PedidosColetas: NextLayoutComponentType<PedidosColetasProps> = ({ token }) => {
+const PedidosColetas: NextLayoutComponentType<PedidosColetasProps> = ({ token, user }) => {
   const { data, isFetching } = useQuery(
     'listRequests',
     () => api.get<IRequest[]>('/requests'),
@@ -57,6 +71,16 @@ const PedidosColetas: NextLayoutComponentType<PedidosColetasProps> = ({ token })
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    fetch('/api/auth/signIn', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, user: JSON.stringify(user) }),
+    });
+  });
 
   return (
     <Container>
@@ -95,10 +119,11 @@ PedidosColetas.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { PataEPalmaToken: token } = req.cookies;
+  const { PataEPalmaUser: user, PataEPalmaToken: token } = req.cookies;
 
   return {
     props: {
+      user: JSON.parse(user),
       token,
     },
   };
