@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextLayoutComponentType } from 'next';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
@@ -46,11 +46,23 @@ interface IRequest {
 }
 
 const PedidosColetas: NextLayoutComponentType<PedidosColetasProps> = ({ token, user }) => {
+  const [numberOfRequests, setNumberOfRequests] = useState(0);
   const { data, isFetching } = useQuery(
     'listRequests',
     () => api.get<IRequest[]>('/requests'),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes
+      refetchInterval: 1000 * 60 * 20, // 20 minutes
+      refetchIntervalInBackground: true,
+
+      onSuccess: (response) => {
+        if (response.data.length > numberOfRequests) {
+          new Notification('NOVO PEDIDO DE COLETA', {
+            body: `Pedido feito por: ${response.data[0].username}`,
+          });
+        }
+        setNumberOfRequests(response.data.length);
+      },
     },
   );
 
@@ -86,6 +98,10 @@ const PedidosColetas: NextLayoutComponentType<PedidosColetasProps> = ({ token, u
         body: JSON.stringify({ token, user: JSON.stringify(user) }),
       });
     });
+
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
   });
 
   return (
