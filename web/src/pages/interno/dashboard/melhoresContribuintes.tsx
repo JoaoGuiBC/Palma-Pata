@@ -67,12 +67,18 @@ const MelhoresContribuintes: NextLayoutComponentType<MelhoresContribuintesProps>
   );
 
   useEffect(() => {
-    fetch('/api/auth/signIn', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token, user: JSON.stringify(user) }),
+    api.post('/sessions/revalidate', {}, {
+      headers: { authorization: token },
+    }).then((response) => {
+      token = response.data;
+
+      fetch('/api/auth/signIn', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token, user: JSON.stringify(user) }),
+      });
     });
   });
 
@@ -113,7 +119,7 @@ const MelhoresContribuintes: NextLayoutComponentType<MelhoresContribuintesProps>
             </TableHead>
             <TableBody>
               {data?.data.bestContributors.map((users) => (
-                <TableRow key={users.username}>
+                <TableRow key={`${users.username}-${users.quantity}`}>
                   <Data>{users.username}</Data>
                   <Data>{users.quantity}</Data>
                 </TableRow>

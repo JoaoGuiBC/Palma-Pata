@@ -28,6 +28,7 @@
     ],
     "rules": {
         "no-undef": "off",
+        "no-param-reassign": "off",
         "react/prop-types": "off",
         "linebreak-style": "off",
         "camelcase": "off",

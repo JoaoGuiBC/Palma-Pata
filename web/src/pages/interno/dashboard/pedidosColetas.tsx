@@ -73,12 +73,18 @@ const PedidosColetas: NextLayoutComponentType<PedidosColetasProps> = ({ token, u
   };
 
   useEffect(() => {
-    fetch('/api/auth/signIn', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token, user: JSON.stringify(user) }),
+    api.post('/sessions/revalidate', {}, {
+      headers: { authorization: token },
+    }).then((response) => {
+      token = response.data;
+
+      fetch('/api/auth/signIn', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token, user: JSON.stringify(user) }),
+      });
     });
   });
 
